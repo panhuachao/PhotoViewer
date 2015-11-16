@@ -5,22 +5,14 @@ android photoviewer, 主要应用于图片大图浏览，该项目基于eclispe�
 
 和普通的ImageView一样的使用方法
 
-如使用过程中有任何bug，意见或建议，可邮件给我 bmme@vip.qq.com
-
 # 效果图
 ![PhotoView](./demo2.gif) ![PhotoView](./demo1.gif)
 
 #使用
-1.Gradle添加依赖 (推荐)
-```gradle
-dependencies {
-    compile 'com.bm.photoview:library:1.3.6'
-}
-```
 
 (或者也可以将项目下载下来，将Info.java和PhotoView.java两个文件拷贝到你的项目中，不推荐)
 
-2.xml添加
+1.xml添加
 ```xml
  <com.bm.library.PhotoView
      android:id="@+id/img"
@@ -30,7 +22,7 @@ dependencies {
      android:src="@drawable/bitmap1" />
 ```
 
-3.java代码
+2.java代码
 ```java
 PhotoView photoView = (PhotoView) findViewById(R.id.img);
 // 启用图片缩放功能
