@@ -37,6 +37,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
+       <ImageView
+            android:id="@+id/acitivity_photo_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ff000000" />
        <android.support.v4.view.ViewPager
          android:id="@+id/acitivity_photo_viewpager"
          android:layout_width="match_parent"

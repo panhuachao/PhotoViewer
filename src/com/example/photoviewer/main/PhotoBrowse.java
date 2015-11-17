@@ -35,6 +35,7 @@ public class PhotoBrowse extends Activity {
     
     View mViewpagerFrame;
     private ViewPager mViewPager;
+    View mViewBg;
     
     AlphaAnimation in = new AlphaAnimation(0, 1);
     AlphaAnimation out = new AlphaAnimation(1, 0);
@@ -50,6 +51,7 @@ public class PhotoBrowse extends Activity {
         
         mViewpagerFrame=findViewById(R.id.acitivity_photo_frame);
         mViewPager = (ViewPager) findViewById(R.id.acitivity_photo_viewpager);
+        mViewBg = findViewById(R.id.acitivity_photo_bg);
         
         mParent = findViewById(R.id.parent);
         mBg = findViewById(R.id.bg);
@@ -86,13 +88,10 @@ public class PhotoBrowse extends Activity {
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                PhotoView p = (PhotoView) view;
-//                mInfo = p.getInfo();
-//
 //                mPhotoView.setImageResource(imgs[position]);
-//                mBg.startAnimation(in);
+                mViewBg.startAnimation(in);
 //                //mParent.setVisibility(View.VISIBLE);
-//                mPhotoView.animaFrom(mInfo);
+                //mPhotoView.animaFrom(mInfo);
             	mViewpagerFrame.setVisibility(View.VISIBLE);
             	mViewPager.setCurrentItem(position);
             }
@@ -120,14 +119,8 @@ public class PhotoBrowse extends Activity {
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        mBg.startAnimation(out);
-//                        mPhotoView.animaTo(mInfo, new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                mParent.setVisibility(View.GONE);
-//                            }
-//                        });
-                    	mViewpagerFrame.setVisibility(View.GONE);
+                        mViewBg.startAnimation(out);
+                        mViewpagerFrame.setVisibility(View.GONE);
                     }
                 });
                 return view;
@@ -143,14 +136,9 @@ public class PhotoBrowse extends Activity {
 
     @Override
     public void onBackPressed() {
-        if (mParent.getVisibility() == View.VISIBLE) {
-            mBg.startAnimation(out);
-            mPhotoView.animaTo(mInfo, new Runnable() {
-                @Override
-                public void run() {
-                    //mParent.setVisibility(View.GONE);
-                }
-            });
+        if (mViewpagerFrame.getVisibility() == View.VISIBLE) {
+        	mViewBg.startAnimation(out);
+        	mViewpagerFrame.setVisibility(View.GONE);
         } else {
             super.onBackPressed();
         }
