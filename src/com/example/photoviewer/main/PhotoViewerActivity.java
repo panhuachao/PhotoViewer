@@ -3,6 +3,7 @@ package com.example.photoviewer.main;
 import com.example.photoviewer.R;
 import com.example.photoviewer.lib.Info;
 import com.example.photoviewer.lib.PhotoView;
+import com.example.photoviewer.lib.PhotoViewer;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -22,7 +23,7 @@ import android.widget.ImageView;
 /**
  * Created by liuheng on 2015/8/19.
  */
-public class PhotoBrowse extends Activity {
+public class PhotoViewerActivity extends Activity {
 
     int[] imgs = new int[]{R.drawable.aaa, R.drawable.bbb, R.drawable.ccc, R.drawable.ddd, R.drawable.ic_launcher, R.drawable.image003};
 
@@ -33,29 +34,18 @@ public class PhotoBrowse extends Activity {
     PhotoView mPhotoView;
     Info mInfo;
     
-    View mViewpagerFrame;
+    PhotoViewer pvViewer;
     private ViewPager mViewPager;
     View mViewBg;
     
-    AlphaAnimation in = new AlphaAnimation(0, 1);
-    AlphaAnimation out = new AlphaAnimation(1, 0);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_photo_browse);
+        setContentView(R.layout.activity_photo_viewpager);
 
-        in.setDuration(300);
-        out.setDuration(300);
+        pvViewer=(PhotoViewer)findViewById(R.id.acitivity_photo_frame);
         
-        mViewpagerFrame=findViewById(R.id.acitivity_photo_frame);
-        mViewPager = (ViewPager) findViewById(R.id.acitivity_photo_viewpager);
-        mViewBg = findViewById(R.id.acitivity_photo_bg);
-        
-        mParent = findViewById(R.id.parent);
-        mBg = findViewById(R.id.bg);
-        mPhotoView = (PhotoView) findViewById(R.id.img);
         gv = (GridView) findViewById(R.id.gv);
         gv.setAdapter(new BaseAdapter() {
             @Override
@@ -75,7 +65,7 @@ public class PhotoBrowse extends Activity {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                PhotoView p = new PhotoView(PhotoBrowse.this);
+                PhotoView p = new PhotoView(PhotoViewerActivity.this);
                 p.setLayoutParams(new AbsListView.LayoutParams((int) (getResources().getDisplayMetrics().density * 100), (int) (getResources().getDisplayMetrics().density * 100)));
                 p.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 p.setImageResource(imgs[position]);
@@ -89,56 +79,19 @@ public class PhotoBrowse extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                mPhotoView.setImageResource(imgs[position]);
-                mViewBg.startAnimation(in);
-//                //mParent.setVisibility(View.VISIBLE);
-                //mPhotoView.animaFrom(mInfo);
-            	mViewpagerFrame.setVisibility(View.VISIBLE);
-            	mViewPager.setCurrentItem(position);
-            }
-        });
-
-        
-        mViewPager.setPageMargin((int) (getResources().getDisplayMetrics().density * 15));
-        mViewPager.setAdapter(new PagerAdapter() {
-            @Override
-            public int getCount() {
-                return imgs.length;
-            }
-
-            @Override
-            public boolean isViewFromObject(View view, Object object) {
-                return view == object;
-            }
-
-            @Override
-            public Object instantiateItem(ViewGroup container, int position) {
-                PhotoView view = new PhotoView(PhotoBrowse.this);
-                view.enable();
-                view.setImageResource(imgs[position]);
-                container.addView(view);
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mViewBg.startAnimation(out);
-                        mViewpagerFrame.setVisibility(View.GONE);
-                    }
-                });
-                return view;
-            }
-
-            @Override
-            public void destroyItem(ViewGroup container, int position, Object object) {
-                container.removeView((View) object);
+            	//跳转当前position，去除跳转滚动动画
+            	pvViewer.show(position);
             }
         });
         
+        pvViewer.setViewer(imgs);
+        pvViewer.setAnimation(true);
     }
 
     @Override
     public void onBackPressed() {
-        if (mViewpagerFrame.getVisibility() == View.VISIBLE) {
-        	mViewBg.startAnimation(out);
-        	mViewpagerFrame.setVisibility(View.GONE);
+        if (pvViewer.isShow()==true) {
+        	pvViewer.hide();
         } else {
             super.onBackPressed();
         }

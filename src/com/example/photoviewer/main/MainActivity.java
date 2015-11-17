@@ -34,7 +34,10 @@ public class MainActivity extends Activity {
     }
 
     public void photobrowse(View view) {
-        startActivity(new Intent(this, PhotoBrowse.class));
+        startActivity(new Intent(this, PhotoViewerActivity.class));
     }
-
+    
+    public void photosingle(View view) {
+        startActivity(new Intent(this, PhotoSingleActivity.class));
+    }
 }

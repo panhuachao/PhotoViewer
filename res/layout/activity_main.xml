@@ -38,7 +38,15 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:onClick="photobrowse"
-        android:text="ImageView点击浏览大图"
+        android:text="ViewPager浏览大图"
+        android:textAllCaps="false" />
+    
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:onClick="photosingle"
+        android:text="单张浏览大图"
         android:textAllCaps="false" />
 
 </LinearLayout>
