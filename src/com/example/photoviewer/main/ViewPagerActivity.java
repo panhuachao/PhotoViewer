@@ -53,5 +53,7 @@ public class ViewPagerActivity extends Activity {
                 container.removeView((View) object);
             }
         });
+        
+        mPager.setCurrentItem(2);
     }
 }

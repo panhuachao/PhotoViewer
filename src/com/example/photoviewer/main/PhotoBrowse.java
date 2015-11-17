@@ -6,6 +6,8 @@ import com.example.photoviewer.lib.PhotoView;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -30,7 +32,10 @@ public class PhotoBrowse extends Activity {
     View mBg;
     PhotoView mPhotoView;
     Info mInfo;
-
+    
+    View mViewpagerFrame;
+    private ViewPager mViewPager;
+    
     AlphaAnimation in = new AlphaAnimation(0, 1);
     AlphaAnimation out = new AlphaAnimation(1, 0);
 
@@ -42,7 +47,10 @@ public class PhotoBrowse extends Activity {
 
         in.setDuration(300);
         out.setDuration(300);
-
+        
+        mViewpagerFrame=findViewById(R.id.acitivity_photo_frame);
+        mViewPager = (ViewPager) findViewById(R.id.acitivity_photo_viewpager);
+        
         mParent = findViewById(R.id.parent);
         mBg = findViewById(R.id.bg);
         mPhotoView = (PhotoView) findViewById(R.id.img);
@@ -78,29 +86,59 @@ public class PhotoBrowse extends Activity {
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PhotoView p = (PhotoView) view;
-                mInfo = p.getInfo();
-
-                mPhotoView.setImageResource(imgs[position]);
-                mBg.startAnimation(in);
-                mParent.setVisibility(View.VISIBLE);
-                mPhotoView.animaFrom(mInfo);
+//                PhotoView p = (PhotoView) view;
+//                mInfo = p.getInfo();
+//
+//                mPhotoView.setImageResource(imgs[position]);
+//                mBg.startAnimation(in);
+//                //mParent.setVisibility(View.VISIBLE);
+//                mPhotoView.animaFrom(mInfo);
+            	mViewpagerFrame.setVisibility(View.VISIBLE);
+            	mViewPager.setCurrentItem(position);
             }
         });
 
-        mPhotoView.enable();
-        mPhotoView.setOnClickListener(new View.OnClickListener() {
+        
+        mViewPager.setPageMargin((int) (getResources().getDisplayMetrics().density * 15));
+        mViewPager.setAdapter(new PagerAdapter() {
             @Override
-            public void onClick(View v) {
-                mBg.startAnimation(out);
-                mPhotoView.animaTo(mInfo, new Runnable() {
+            public int getCount() {
+                return imgs.length;
+            }
+
+            @Override
+            public boolean isViewFromObject(View view, Object object) {
+                return view == object;
+            }
+
+            @Override
+            public Object instantiateItem(ViewGroup container, int position) {
+                PhotoView view = new PhotoView(PhotoBrowse.this);
+                view.enable();
+                view.setImageResource(imgs[position]);
+                container.addView(view);
+                view.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void run() {
-                        mParent.setVisibility(View.GONE);
+                    public void onClick(View v) {
+//                        mBg.startAnimation(out);
+//                        mPhotoView.animaTo(mInfo, new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                mParent.setVisibility(View.GONE);
+//                            }
+//                        });
+                    	mViewpagerFrame.setVisibility(View.GONE);
                     }
                 });
+                return view;
+            }
+
+            @Override
+            public void destroyItem(ViewGroup container, int position, Object object) {
+                container.removeView((View) object);
             }
         });
+        
     }
 
     @Override
@@ -110,7 +148,7 @@ public class PhotoBrowse extends Activity {
             mPhotoView.animaTo(mInfo, new Runnable() {
                 @Override
                 public void run() {
-                    mParent.setVisibility(View.GONE);
+                    //mParent.setVisibility(View.GONE);
                 }
             });
         } else {

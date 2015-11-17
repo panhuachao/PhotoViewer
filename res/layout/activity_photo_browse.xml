@@ -31,5 +31,16 @@
             android:layout_height="match_parent"></com.example.photoviewer.lib.PhotoView>
 
     </FrameLayout>
-
+    
+    <FrameLayout
+        android:id="@+id/acitivity_photo_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+       <android.support.v4.view.ViewPager
+         android:id="@+id/acitivity_photo_viewpager"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:background="#000000" />
+     </FrameLayout>
 </FrameLayout>
