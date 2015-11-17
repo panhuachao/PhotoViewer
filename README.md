@@ -1,5 +1,5 @@
 # PhotoViewer
-android photoviewer, 主要应用于图片大图浏览，该项目基于eclispe，来源于https://github.com/bm-x/PhotoView ，详细说明见下:
+android photoviewer, 主要应用于图片大图浏览，该项目基于eclispe，来源于https://github.com/bm-x/PhotoView ，其原说明见下:
 
 # PhotoView 图片浏览缩放控件
 
@@ -44,20 +44,9 @@ photoView.animaTo(info,new Runnable() {
 int d = PhotoView.getDefaultAnimaDuring();
 ```
 
-# 版本
-
-v1.3.6
-   * 增加图片的旋转功能
-   * 版本号命名改变
-
-v2.0.7
-   * 宽高属性可以设置为wrap_content，添加对adjustViewBounds属性的支持
-   * 修复某些情况下会闪动
-   * 增加对ScaleType.FIT_START,FIT_END对animaFrom的支持
-
-v2.0.0  
-   * 添加animaTo,animaFrom方法，支持图片点击放大缩小浏览功能
-   * 添加enable()和disenable() 打开和关闭触摸缩放方法，默认打开 (当普通ImageView使用的时候建议关闭触摸缩放功能)
-   * 支持所有ScaleType属性
-
+# 版本说明
+v1.1
+ * 创建PhotoViewer，实现viewpager整合，单张图片效果显示
+ 
 v1.0
+ * 迁移项目
